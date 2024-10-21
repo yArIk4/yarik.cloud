@@ -158,7 +158,7 @@ const lorenzInfo = `
 //`
 
 let terminalLeft, writeSpeedLeft, terminalRight, writeSpeedRight;
-let buttonGroup;
+let buttonMenuEnabled, buttonGroup;
 let inactivityTimeout;
 const inactivityTimeoutValue = 2000; // 10s
 
@@ -168,9 +168,10 @@ window.addEventListener('load', init);
 function init() {
 
     writeSpeedLeft = 8;
-    terminalLeft = document.getElementById("terminal");
     writeSpeedRight = 0;
+    terminalLeft = document.getElementById("terminal");
     terminalRight = document.getElementById("terminal-right");
+    buttonMenuEnabled = true;
 
     terminalLeft.innerText = terminalPrompt;
     terminalRight.innerText = "";
@@ -183,11 +184,15 @@ function init() {
     document.addEventListener('touchmove', showMenuButtons);
 
     // Key input listener
-    terminalLeft.addEventListener('keydown', terminalInputHandler);
+    terminalLeft.addEventListener('keydown', terminalKeybHandler);
 
     // Button input listeners
-    document.getElementById('button1').addEventListener('click', terminalInputHandler);
-
+    document.getElementById('button1').addEventListener('click', terminalMouseHandler);
+    document.getElementById('button2').addEventListener('click', terminalMouseHandler);
+    document.getElementById('button3').addEventListener('click', terminalMouseHandler);
+    document.getElementById('button4').addEventListener('click', terminalMouseHandler);
+    document.getElementById('button5').addEventListener('click', terminalMouseHandler);
+    document.getElementById('button9').addEventListener('click', terminalMouseHandler);
 }
 
 function showMenuButtons() {
@@ -221,6 +226,7 @@ function terminalWrite(text, terminal, speed) {
     (function writer() {
         terminalLeft.disabled = true;
         terminalRight.disabled = true;
+        buttonMenuEnabled = false;
         if (counter < text.length) {
             let terminalText = (`${(terminal.value).replace("┋", "")}${text.charAt(counter)}`);
             if (counter !== text.length - 1) {
@@ -233,6 +239,7 @@ function terminalWrite(text, terminal, speed) {
             setTimeout(writer, speed);
         } else {
             clearTimeout(writer);
+            buttonMenuEnabled = true;
             terminalLeft.disabled = false;
             terminalLeft.blur();
             terminalLeft.focus();
@@ -240,9 +247,20 @@ function terminalWrite(text, terminal, speed) {
     })();
 }
 
-function terminalInputHandler(e) {
-    console.log('Button was clicked: ' + e);
-    switch (e.keyCode) {
+function terminalKeybHandler(e) {
+    terminalInputHandler(e.keyCode);
+}
+
+function terminalMouseHandler(e) {
+    if (!buttonMenuEnabled) return;
+    //console.log('Button was clicked: ', e.target.id);
+    keyCode = parseInt(e.target.id.charAt(e.target.id.length - 1)) + 48; // Tiny kludge here :)
+    terminalInputHandler(keyCode);
+}
+
+function terminalInputHandler(keyCode) {
+    //console.log('Key was clicked: ', keyCode);
+    switch (keyCode) {
         case 49:    // 1
         case 97:    // numpad 1
             terminalWrite("1\ncat contact-info.txt\n" + contactInfo + selectPrompt, terminalLeft, writeSpeedLeft);
@@ -283,7 +301,7 @@ function terminalInputHandler(e) {
             terminalWrite("q\nTry pressing sequence: Esc : q !\n", terminalLeft, writeSpeedLeft);
             break;
         default:
-            e.preventDefault();
+            //e.preventDefault();
             terminalWrite("\nSyntax error." + selectPrompt, terminalLeft, writeSpeedLeft);
     }
 }
