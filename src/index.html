@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>yarik.cloud</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Jari Kuokkanen">
+    <link rel="stylesheet" href="./assets/styles.css">
+    <style>
+        #overlayCanvas {
+            height: 80%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 9999;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body class="site-body">
+    <header>
+        <p>Jari Kuokkanen, Senior Cloud Architect</p>
+    </header>
+
+    <main class="site-content">
+        <video class="video" type="video/mp4" poster="https://img1.wsimg.com/isteam/videos/uA41GmyyG8IMaxXdb"
+            autoplay="" loop="" muted="" playsinline="" onloadstart="this.playbackRate = 0.5;"
+            style="width:100%;display:block;position:absolute;top:50%;left:50%;transform:translateX(-50%) translateY(-50%);height:80%;min-height:80%;object-fit:cover"
+            src="https://websites.godaddy.com/categories/v4/videos/raw/video/uA41GmyyG8IMaxXdb">
+        </video>
+
+        <div class="menu-button-group" id="menu-buttons">
+            <button id="button1">1</button>
+            <button id="button2">2</button>
+            <button id="button3">3</button>
+            <button id="button4">4</button>
+            <button id="button5">5</button>
+            <button id="button9">9</button>
+        </div>
+
+        <textarea class="terminal" autofocus="off" autocomplete="off" autocorrect="off" autocapitalize="off"
+            spellcheck="false" id="terminal" cols="110" rows="39">
+        </textarea>
+        <textarea class="terminal-right" autofocus="off" wrap="hard" readonly="on" autocomplete="off" autocorrect="off"
+            autocapitalize="off" spellcheck="false" id="terminal-right" cols="110" rows="56">
+        </textarea>
+
+        <!-- Start pseudo-terminal emulation -->
+        <script src="./assets/terminal-code.js"></script>
+
+        <!-- Load and run the Lorenz attractor rotoperhonen -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+        <script src="./assets/lorenz-code.js"></script>
+    </main>
+
+    <footer>
+        <p>Copyright © 2024</p>
+    </footer>
+</body>
+
+
+
